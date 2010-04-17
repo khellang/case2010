@@ -1,7 +1,7 @@
 package gui;
 import interfaceCASE.CASE_VÅR_2010_Interface;
-import interfaceCASE.Case_Abstract;
 import interfaceCASE.GUI_Case;
+
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
@@ -29,6 +29,7 @@ import javax.vecmath.Color3f;
 import javax.vecmath.Point3f;
 
 import shapes.Wall;
+
 import transformGroups.BoxGroup;
 import transformGroups.SphereGroup;
 import utils.TextureList;
@@ -38,7 +39,13 @@ import com.sun.j3d.utils.picking.PickResult;
 import com.sun.j3d.utils.picking.PickTool;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
-public class SlideShowPanel extends Applet implements MouseListener,CASE_VÅR_2010_Interface {
+public class SlideShowPanel extends JPanel implements MouseListener,CASE_VÅR_2010_Interface {
+
+ 
+	public static void main(String[] args) {
+		  
+	    new GUI_Case(new SlideShowPanel(), 1024, 768);
+	  }
 	protected File images;
 	  protected Alpha alpha;
 	  protected TransformGroup scaleTransGroup;
@@ -48,36 +55,34 @@ public class SlideShowPanel extends Applet implements MouseListener,CASE_VÅR_201
 	  protected PickCanvas pc;
 	  protected Appearance wallAp;
 	  protected TextureList textures;
- 
-	public static void main(String[] args) {
-		  
-	    new GUI_Case(new SlideShowPanel(), 640, 480);
-	  }
-
-	public void init(){
+	  protected Canvas3D cv;
+	  protected SimpleUniverse su;
+	  protected GraphicsConfiguration gc;
+	  protected BranchGroup root;
+	  protected BoundingSphere bounds;
+	public SlideShowPanel(){
 		images = new File("C:/Users/Terje/Pictures/LifeCam Files");
 		textures = new TextureList(images);
-		System.out.println("INIT");
-		GraphicsConfiguration gc = SimpleUniverse.getPreferredConfiguration();
-	    Canvas3D cv = new Canvas3D(gc);
+		gc = SimpleUniverse.getPreferredConfiguration();
+	    cv = new Canvas3D(gc);
 	    setLayout(new BorderLayout());
 	    setPreferredSize(new Dimension(1024, 768));
 	    add(cv, BorderLayout.CENTER);
-	    BranchGroup bg = createSceneGraph();
-	    bg.compile();
-	    pc = new PickCanvas(cv, bg);
-	    pc.setMode(PickTool.GEOMETRY);
-	    SimpleUniverse su = new SimpleUniverse(cv);
-	    su.getViewingPlatform().setNominalViewingTransform();
-	    su.addBranchGraph(bg);
-	    cv.addMouseListener(this);
+    BranchGroup bg = createSceneGraph();
+    bg.compile();
+    pc = new PickCanvas(cv, bg);
+    pc.setMode(PickTool.GEOMETRY);
+    su = new SimpleUniverse(cv);
+    su.getViewingPlatform().setNominalViewingTransform();
+    
+    su.addBranchGraph(bg);
+    cv.addMouseListener(this);
 	
 	}
 
 	private BranchGroup createSceneGraph() {
-		BranchGroup root = new BranchGroup();
-
-		BoundingSphere bounds = new BoundingSphere();
+		root = new BranchGroup();
+		bounds = new BoundingSphere();
 		
 		Point3f lightPos = new Point3f(0f,0f,25f);
 		Point3f wallPos = new Point3f(0f, 0f, -2f);
@@ -99,7 +104,8 @@ public class SlideShowPanel extends Applet implements MouseListener,CASE_VÅR_201
 		root.addChild(sphereGroup);
 
 		//background
-		Background background = new Background(0.0f, 0.0f, 0.0f);
+		background = new Background(0f, 0f, 0f);
+		background.setCapability(Background.ALLOW_COLOR_WRITE|Background.ALLOW_COLOR_READ);
 		background.setApplicationBounds(bounds);
 		root.addChild(background);
 		return root;
@@ -126,11 +132,6 @@ public class SlideShowPanel extends Applet implements MouseListener,CASE_VÅR_201
 
 	public void mouseReleased(MouseEvent arg0) { }
 
-	@Override
-	public void setAlpha(int alpha) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void setImages(File images) {
@@ -144,11 +145,35 @@ public class SlideShowPanel extends Applet implements MouseListener,CASE_VÅR_201
 	}
 
 	@Override
-	public void setScale(float max, float min) {
+	public void setAlphaBox(int alpha) {
+		boxGroup.setRotTime(alpha);
+		
+	}
+
+	@Override
+	public void setAlphaSpere(int alpha) {
+		sphereGroup.setRotTime(alpha);
+		
+	}
+
+	@Override
+	public void setScaleBox(float max, float min) {
 		boxGroup.setScale(max,min );
+		
+	}
+
+	@Override
+	public void setScaleSphere(float max, float min) {
 		sphereGroup.setScale(max, min);
 		
 	}
+
+	//@Override
+	//public void setBackGroundColor3F(Color3f color) {
+		//background.setColor(color);
+	
+		
+	//}
 
 
 

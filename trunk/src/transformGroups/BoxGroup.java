@@ -47,11 +47,14 @@ public class BoxGroup extends TransformGroup {
 	GeometryArray shadowGeom;
 	Transform3D shadowProj;
 	ScaleInterpolator scaler;
+	Alpha rotateAlpha;
+	
+
 	
 	Appearance shadowAp;
 
 	public BoxGroup(int slideTime, BoundingSphere bounds, TextureList textures, Point3f lightPos, Point3f wallPos, int delay) {
-
+	
 		updater = new ShadowUpdater();
 		
 		shadowGroup = new TransformGroup();
@@ -152,7 +155,8 @@ public class BoxGroup extends TransformGroup {
 		scaleGroup.addChild(scaler);
 
 		//rotator
-		Alpha rotateAlpha = new Alpha();
+		rotateAlpha = new Alpha();
+		
 		rotateAlpha.setMode(Alpha.DECREASING_ENABLE | Alpha.INCREASING_ENABLE);
 		rotateAlpha.setDecreasingAlphaDuration(slideTime);
 		rotateAlpha.setIncreasingAlphaDuration(slideTime);
@@ -169,6 +173,13 @@ public class BoxGroup extends TransformGroup {
 	public void setScale(float max, float min){
 		scaler.setMaximumScale(max);
 		scaler.setMinimumScale(min);
+	}
+	public void setRotTime(int rotTime){
+		rotateAlpha.setIncreasingAlphaDuration(rotTime);
+		rotateAlpha.setDecreasingAlphaDuration(-rotTime);
+	}
+	public void setPosTime(int posTime){
+		
 	}
 
 	private GeometryArray createShadow(GeometryArray ga, Point3f light, Point3f plane) {
