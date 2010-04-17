@@ -45,6 +45,7 @@ public class SphereGroup extends TransformGroup {
 	GeometryArray shadowGeom;
 	Transform3D shadowProj;
 	ScaleInterpolator scaler;
+	Alpha rotateAlpha;
 	
 	Appearance shadowAp;
 	
@@ -151,7 +152,7 @@ public class SphereGroup extends TransformGroup {
 		scaleGroup.addChild(scaler);
 
 		//rotator
-		Alpha rotateAlpha = new Alpha();
+	    rotateAlpha = new Alpha();
 		rotateAlpha.setMode(Alpha.DECREASING_ENABLE | Alpha.INCREASING_ENABLE);
 		rotateAlpha.setDecreasingAlphaDuration(slideTime);
 		rotateAlpha.setIncreasingAlphaDuration(slideTime);
@@ -285,6 +286,12 @@ public class SphereGroup extends TransformGroup {
 	public void setScale(float max, float min) {
 		scaler.setMaximumScale(max);
 		scaler.setMinimumScale(min);
+		
+	}
+
+	public void setRotTime(int rotTime) {
+		rotateAlpha.setIncreasingAlphaDuration(rotTime);
+		rotateAlpha.setDecreasingAlphaDuration(-rotTime);
 		
 	}
 	
