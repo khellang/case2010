@@ -29,6 +29,7 @@ public class RandomRotationInterpolator extends Interpolator {
 		wakeupOn(new WakeupOnElapsedFrames(0));
 	}
 
+	@SuppressWarnings("unchecked")
 	public void processStimulus(Enumeration arg0) {
 		if (getAlpha().value() >= 0.95 || getAlpha().value() <= 0.05) {
 			try {

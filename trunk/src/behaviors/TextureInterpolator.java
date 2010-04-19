@@ -67,6 +67,7 @@ public class TextureInterpolator extends Interpolator {
 	 * Implementasjon av metoden <p>processStimulus(Enumeration)</p>
 	 * arvet fra <p>Behavior</p>.
 	 */
+	@SuppressWarnings("unchecked")
 	public void processStimulus(Enumeration arg) {
 		if (getAlpha().value() >= 0.96) {
 			if (!changeTimer.isAlive()) {

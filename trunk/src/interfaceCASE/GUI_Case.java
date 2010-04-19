@@ -1,39 +1,25 @@
 package interfaceCASE;
 
-import gui.SlideShowPanel;
 
-import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Label;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
-
 import javax.swing.Box;
 import javax.swing.JColorChooser;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.vecmath.Color3f;
-
-import com.sun.j3d.utils.applet.MainFrame;
-
 
 
 public class GUI_Case extends JFrame implements ActionListener  {
@@ -45,9 +31,9 @@ public class GUI_Case extends JFrame implements ActionListener  {
 	JPanel panel;
 	JFileChooser fc;
 	JColorChooser cc;
-	MenuBar mb;
-	Menu mn;
-	MenuItem mi;
+	JMenuBar mb;
+	JMenu mn;
+	JMenuItem mi;
 	File thisFile;
 	JSlider boxRotSlider;
 	JSlider sphereRotSlider;
@@ -56,11 +42,10 @@ public class GUI_Case extends JFrame implements ActionListener  {
 	int alpha;
 	float scaleMax;
 	float scaleMin;
-	Color color = new Color(0f,0f,0f);
-	Label rotC_Label;
-	Label rotS_Label;
-	Label scaleC_Label;
-	Label scaleS_Label;
+	Color color;
+	JLabel roteringLabel;
+	JLabel skaleringLabel;
+
 	
 	
 	CASE_VÅR_2010_Interface asdf;
@@ -71,126 +56,104 @@ public class GUI_Case extends JFrame implements ActionListener  {
 		super("CASE 2010");
 		asdf = (CASE_VÅR_2010_Interface)casePanel;
 		setSize(new Dimension(arg1, arg2));
+		color = new Color(0,0,0);
 		//Setter opp menyen
-		mb = new MenuBar();
-		mn = new Menu("Fil");
-		mi = new MenuItem("Åpne");
+		mb = new JMenuBar();
+		mn = new JMenu("Fil");
+		mi = new JMenuItem("Åpne");
 		mi.addActionListener(this);
 		mn.add(mi);
 		mb.add(mn);
-		mn = new Menu("Ledig meny");
-		mi = new MenuItem("Endre bakgrunn");
-		mi.addActionListener(this);
-		mn.add(mi);
-		mi = new MenuItem("Item m/lytter");
+		mn = new JMenu("Valg");
+		mi = new JMenuItem("Kontrollpanel farge");
 		mi.addActionListener(this);
 		mn.add(mi);
 		mb.add(mn);
-		//Panel til fileChooser
 		chooserPanel = new JFrame();
 		//
 		panel = new JPanel();
 		panel.setBackground(color);
-		panel.setOpaque(true);
-		rotC_Label = new Label("Kube rotasjon");
-		rotC_Label.setForeground(Color.white);
-		rotC_Label.setBackground(color);
-		boxRotSlider = new JSlider(1000,10000 , 4500);
-		boxRotSlider.setMajorTickSpacing(500);
+		skaleringLabel = new JLabel("          Skalering");
+		skaleringLabel.setForeground(Color.white);		
+		roteringLabel = new JLabel("          Rotasjon");
+		roteringLabel.setForeground(Color.white);
+		boxRotSlider = new JSlider(1,16 , 5);
+		boxRotSlider.setMajorTickSpacing(5);
+		boxRotSlider.setMinorTickSpacing(1);
 		boxRotSlider.setInverted(true);
-		boxRotSlider.setBackground(Color.white);
+		boxRotSlider.setPaintTicks(true);
+		boxRotSlider.setPaintTrack(false);
+		boxRotSlider.setSnapToTicks(true);
 		boxRotSlider.setOpaque(false);
 		boxRotSlider.addChangeListener(new ChangeListener() {
 			
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				alpha = boxRotSlider.getValue();
+				alpha = boxRotSlider.getValue()*1000;
 				
 				asdf.setAlphaBox(alpha);
 				
 			}
 		});
-		rotS_Label = new Label("Sphere rotasjon");
-		rotS_Label.setForeground(Color.white);
-		rotS_Label.setBackground(color);
-		sphereRotSlider = new JSlider(500, 20000, 4000);
+		sphereRotSlider = new JSlider(1, 16, 5);
+		sphereRotSlider.setMajorTickSpacing(5);
+		sphereRotSlider.setMinorTickSpacing(1);
+		sphereRotSlider.setPaintTicks(true);
+		sphereRotSlider.setPaintTrack(false);
 		sphereRotSlider.setInverted(true);
-		sphereRotSlider.setBackground(Color.white);
+		sphereRotSlider.setSnapToTicks(true);
+		sphereRotSlider.setOpaque(false);
 		sphereRotSlider.addChangeListener(new ChangeListener() {
 			
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				alpha = sphereRotSlider.getValue();
+				alpha = sphereRotSlider.getValue()*1000;
 				
 				asdf.setAlphaSpere(alpha);
 				
 			}
 		});
-		sphereRotSlider.setOpaque(false);
-		scaleC_Label = new Label("Cube scale");
-		scaleC_Label.setForeground(Color.white);
-		scaleC_Label.setBackground(color);
-		
-		scaleBoxSlider = new JSlider(1,15,5);
-		scaleBoxSlider.setName("Scale");
-		scaleBoxSlider.setBackground(Color.white);
+		scaleBoxSlider = new JSlider(1,16,5);
+		scaleBoxSlider.setMajorTickSpacing(5);
+		scaleBoxSlider.setMinorTickSpacing(1);
+		scaleBoxSlider.setPaintTicks(true);
+		scaleBoxSlider.setPaintTrack(false);
 		scaleBoxSlider.setOpaque(false);
 		scaleBoxSlider.addChangeListener(new ChangeListener() {
-			
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				scaleMax = (float)scaleBoxSlider.getValue()/10;
-				scaleMin = (float)scaleBoxSlider.getValue()/100;
-				
+				scaleMin = (float)scaleBoxSlider.getValue()/1000;
 				asdf.setScaleBox(scaleMax, scaleMin);
-				
 			}
-			
 		});
-		scaleS_Label = new Label("Sphere scale");
-		scaleS_Label.setForeground(Color.white);
-		scaleS_Label.setBackground(color);
-		scaleSphereSlider = new JSlider(1,15,5);
-		scaleSphereSlider.setName("Scale");
-		scaleSphereSlider.setBackground(Color.white);
+		scaleSphereSlider = new JSlider(1,16,5);
+		scaleSphereSlider.setMajorTickSpacing(5);
+		scaleSphereSlider.setMinorTickSpacing(1);
+		scaleSphereSlider.setPaintTicks(true);
+		scaleSphereSlider.setPaintTrack(false);
 		scaleSphereSlider.setOpaque(false);
 		scaleSphereSlider.addChangeListener(new ChangeListener() {
-
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				scaleMax = (float)scaleSphereSlider.getValue()/10;
-				scaleMin = (float)scaleSphereSlider.getValue()/100;
-				
+				scaleMin = (float)scaleSphereSlider.getValue()/1000;
 				asdf.setScaleSphere(scaleMax, scaleMin);
-			
 			}
-			
 		});
-		
 		thisFile = null;
 		Box rotBox = Box.createVerticalBox();
-		Box itemBox = Box.createHorizontalBox();
-		itemBox.add(rotC_Label);
-		itemBox.add(boxRotSlider);
-		Box itemBox_2 = Box.createHorizontalBox();
-		itemBox_2.add(rotS_Label);
-		itemBox_2.add(sphereRotSlider);
-		rotBox.add(itemBox);
-		rotBox.add(itemBox_2);
-		
+		rotBox.add(roteringLabel);
+		rotBox.add(sphereRotSlider);
+		rotBox.add(boxRotSlider);
 		Box scaleBox = Box.createVerticalBox();
-		Box anotherItemBox = Box.createHorizontalBox();
-		anotherItemBox.add(scaleC_Label);
-		anotherItemBox.add(scaleBoxSlider);
-		Box anotherItemBox_2 = Box.createHorizontalBox();
-		anotherItemBox_2.add(scaleS_Label);
-		anotherItemBox_2.add(scaleSphereSlider);
-		scaleBox.add(anotherItemBox);
-		scaleBox.add(anotherItemBox_2);
+		scaleBox.add(skaleringLabel);
+		scaleBox.add(scaleSphereSlider);
+		scaleBox.add(scaleBoxSlider);
 		panel.add(rotBox);
 		panel.add(scaleBox);
 		
-		setMenuBar(mb);
+		setJMenuBar(mb);
 		setLayout(new BorderLayout());
 		add(panel,BorderLayout.SOUTH);
 		add((Component) asdf,BorderLayout.CENTER);
@@ -200,16 +163,9 @@ public class GUI_Case extends JFrame implements ActionListener  {
 		
 		
 		
-		
 	}
 	private void setColors(Color color){
-	//	Color3f color3f = new Color3f(color.getRed(),color.getGreen(),color.getBlue());
-	//	asdf.setBackGroundColor3F(color3f);
 		panel.setBackground(color);
-		rotC_Label.setBackground(color);
-		rotS_Label.setBackground(color);
-		scaleS_Label.setBackground(color);
-		scaleC_Label.setBackground(color);
 		validate();
 	}
 	
@@ -232,7 +188,6 @@ public class GUI_Case extends JFrame implements ActionListener  {
 				thisFile = fc.getSelectedFile();
 				
 			}
-		
 
 					asdf.setImages(thisFile);
 					
@@ -240,7 +195,7 @@ public class GUI_Case extends JFrame implements ActionListener  {
 			
 			
 		
-		else if("Endre bakgrunn".equals(command)){
+		else if("Kontrollpanel farge".equals(command)){
 			color = JColorChooser.showDialog(this, "Velg en farge", color);
 			if(color == null){
 				color = new Color(0,0,0);
