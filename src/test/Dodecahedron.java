@@ -1,8 +1,6 @@
 package test;
 
 import javax.vecmath.*;
-import java.awt.*;
-import java.awt.event.*;
 import javax.media.j3d.*;
 import com.sun.j3d.utils.geometry.*;
 

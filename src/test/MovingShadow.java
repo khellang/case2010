@@ -53,6 +53,11 @@ import com.sun.j3d.utils.geometry.GeometryInfo;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 public class MovingShadow extends Applet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static void main(String[] args) {
 		new MainFrame(new MovingShadow(), 640, 480);
 	}
@@ -282,6 +287,7 @@ public class MovingShadow extends Applet {
 			wakeupOn(wakeup);
 		}
 
+		@SuppressWarnings("unchecked")
 		public void processStimulus(java.util.Enumeration enumeration) {
 			shadowGeom.updateData(updater);
 			wakeupOn(wakeup);

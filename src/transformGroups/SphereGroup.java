@@ -277,6 +277,7 @@ public class SphereGroup extends TransformGroup {
 			wakeupOn(wakeup);
 		}
 
+		@SuppressWarnings("unchecked")
 		public void processStimulus(java.util.Enumeration enumeration) {
 			shadowGeom.updateData(updater);
 			wakeupOn(wakeup);

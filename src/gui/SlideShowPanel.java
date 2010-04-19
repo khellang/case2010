@@ -3,13 +3,12 @@ import interfaceCASE.CASE_VÅR_2010_Interface;
 import interfaceCASE.GUI_Case;
 
 
-import java.applet.Applet;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -24,7 +23,7 @@ import javax.media.j3d.Node;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.TransformGroup;
 import javax.swing.JPanel;
-import javax.swing.JToggleButton;
+
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3f;
 
@@ -42,6 +41,10 @@ import com.sun.j3d.utils.universe.SimpleUniverse;
 public class SlideShowPanel extends JPanel implements MouseListener,CASE_VÅR_2010_Interface {
 
  
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static void main(String[] args) {
 		  
 	    new GUI_Case(new SlideShowPanel(), 1024, 768);
@@ -61,7 +64,7 @@ public class SlideShowPanel extends JPanel implements MouseListener,CASE_VÅR_201
 	  protected BranchGroup root;
 	  protected BoundingSphere bounds;
 	public SlideShowPanel(){
-		images = new File("C:/Users/Terje/Pictures/LifeCam Files");
+		images = new File("C:/Users/Public/Pictures/Sample Pictures");
 		textures = new TextureList(images);
 		gc = SimpleUniverse.getPreferredConfiguration();
 	    cv = new Canvas3D(gc);
@@ -118,7 +121,6 @@ public class SlideShowPanel extends JPanel implements MouseListener,CASE_VÅR_201
 	public void mouseExited(MouseEvent arg0) { }
 
 	public void mousePressed(MouseEvent evt) {
-		System.out.println("Pick");
 		pc.setShapeLocation(evt);
 		PickResult pick = pc.pickClosest();
 		if (pick != null) {
@@ -168,12 +170,6 @@ public class SlideShowPanel extends JPanel implements MouseListener,CASE_VÅR_201
 		
 	}
 
-	//@Override
-	//public void setBackGroundColor3F(Color3f color) {
-		//background.setColor(color);
-	
-		
-	//}
 
 
 
