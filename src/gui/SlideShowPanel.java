@@ -65,6 +65,7 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 	private float maxScaleBox;
 	private float minScaleSphere;
 	private float maxScaleSphere;
+	private int speed;
 
 	public SlideShowPanel() {
 		images = new File("C:/Users/Public/Pictures/Sample Pictures");
@@ -228,13 +229,13 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 		shapeGroups = new BranchGroup[numberOfShapes];
 		for (int i = 0; i < shapeGroups.length; i++) {
 			if (i%2 == 0) {
-				SphereGroup sphereGroup = new SphereGroup(slideTime, bounds, textures, lightPos, wallPos, i * (slideTime / numberOfShapes));
+				SphereGroup sphereGroup = new SphereGroup(speed, bounds, textures, lightPos, wallPos, i * (slideTime / numberOfShapes));
 				sphereGroup.setCapability(BranchGroup.ALLOW_DETACH);
 				sphereGroup.setRotTime(alphaSphere);
 				sphereGroup.setScale(maxScaleSphere, minScaleSphere);
 				shapeGroups[i] = sphereGroup;
 			} else {
-				BoxGroup boxGroup = new BoxGroup(slideTime, bounds, textures, lightPos, wallPos, i * (slideTime / numberOfShapes));
+				BoxGroup boxGroup = new BoxGroup(speed, bounds, textures, lightPos, wallPos, i * (slideTime / numberOfShapes));
 				boxGroup.setCapability(BranchGroup.ALLOW_DETACH);
 				boxGroup.setRotTime(alphaBox);
 				boxGroup.setScale(maxScaleBox, minScaleBox);
@@ -247,6 +248,7 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 	}
 
 	public void setSpeed(int speed) {
+		this.speed = speed;
 		for (int i = 0; i < shapeGroups.length; i++) {
 			if (shapeGroups[i] instanceof BoxGroup) {
 				BoxGroup bg = (BoxGroup)shapeGroups[i];
