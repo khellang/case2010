@@ -105,6 +105,7 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 		lightPos = new Point3f(0f, 0f, 25f);
 		wallPos = new Point3f(0f, 0f, -2f);
 		slideTime = 7000;
+		speed = slideTime;
 
 		TransformGroup wallGroup = new TransformGroup();
 		root.addChild(wallGroup);

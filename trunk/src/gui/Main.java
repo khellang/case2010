@@ -51,12 +51,12 @@ public class Main extends JFrame implements ActionListener  {
 	JLabel roteringLabel;
 	JLabel skaleringLabel;
 
-	
-	
+
+
 	SlideShowImpl asdf;
-	
-	
-	
+
+
+
 	public Main(JPanel casePanel,int arg1,int arg2 ){
 		super("CASE 2010");
 		asdf = (SlideShowImpl)casePanel;
@@ -73,7 +73,7 @@ public class Main extends JFrame implements ActionListener  {
 		mi = new JMenuItem("Kontrollpanel farge");
 		mi.addActionListener(this);
 		mn.add(mi);
-		mb.add(mn);
+		//		mb.add(mn);
 		chooserPanel = new JFrame();
 		//
 		panel = new JPanel();
@@ -82,39 +82,37 @@ public class Main extends JFrame implements ActionListener  {
 		skaleringLabel.setForeground(Color.white);		
 		roteringLabel = new JLabel("          Rotasjon");
 		roteringLabel.setForeground(Color.white);
-		shapesSlider = new JSlider(1,10,1);
+		shapesSlider = new JSlider(1,10,2);
 		shapesSlider.setValue(2);
-		shapesSlider.setMajorTickSpacing(1);
-		shapesSlider.setInverted(false);
+		shapesSlider.setMajorTickSpacing(2);
+		shapesSlider.setMinorTickSpacing(1);
 		shapesSlider.setPaintTicks(true);
-//		shapesSlider.setPaintTrack(false);
+		//		shapesSlider.setPaintTrack(false);
 		shapesSlider.setSnapToTicks(true);
 		shapesSlider.setOpaque(false);
 		shapesSlider.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				
 				asdf.setShapes(shapesSlider.getValue());
-				scaleBoxSlider.setMaximum(11-shapesSlider.getValue());
-				scaleSphereSlider.setMaximum(11-shapesSlider.getValue());
-				
+				scaleBoxSlider.setMaximum(12-shapesSlider.getValue());
+				scaleSphereSlider.setMaximum(12-shapesSlider.getValue());
 			}
 		});
 		speedSlider = new JSlider(1,10,7);
 		speedSlider.setMajorTickSpacing(1);
 		speedSlider.setInverted(true);
 		speedSlider.setPaintTicks(true);
-//		speedSlider.setPaintTrack(false);
+		//		speedSlider.setPaintTrack(false);
 		speedSlider.setSnapToTicks(true);
 		speedSlider.setOpaque(false);
 		speedSlider.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
-				
+
 				asdf.setSpeed(speedSlider.getValue()*1000);
-				
+
 			}
 		});
 		boxRotSlider = new JSlider(1,16 , 5);
@@ -122,42 +120,42 @@ public class Main extends JFrame implements ActionListener  {
 		boxRotSlider.setMinorTickSpacing(1);
 		boxRotSlider.setInverted(true);
 		boxRotSlider.setPaintTicks(true);
-//		boxRotSlider.setPaintTrack(false);
+		//		boxRotSlider.setPaintTrack(false);
 		boxRotSlider.setSnapToTicks(true);
 		boxRotSlider.setOpaque(false);
 		boxRotSlider.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				alpha = boxRotSlider.getValue()*1000;
-				
+
 				asdf.setAlphaBox(alpha);
-				
+
 			}
 		});
 		sphereRotSlider = new JSlider(1, 16, 5);
 		sphereRotSlider.setMajorTickSpacing(5);
 		sphereRotSlider.setMinorTickSpacing(1);
 		sphereRotSlider.setPaintTicks(true);
-//		sphereRotSlider.setPaintTrack(false);
+		//		sphereRotSlider.setPaintTrack(false);
 		sphereRotSlider.setInverted(true);
 		sphereRotSlider.setSnapToTicks(true);
 		sphereRotSlider.setOpaque(false);
 		sphereRotSlider.addChangeListener(new ChangeListener() {
-			
+
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				alpha = sphereRotSlider.getValue()*1000;
-				
+
 				asdf.setAlphaSpere(alpha);
-				
+
 			}
 		});
 		scaleBoxSlider = new JSlider(1,9,3);
 		scaleBoxSlider.setMajorTickSpacing(3);
 		scaleBoxSlider.setMinorTickSpacing(1);
 		scaleBoxSlider.setPaintTicks(true);
-//		scaleBoxSlider.setPaintTrack(false);
+		//		scaleBoxSlider.setPaintTrack(false);
 		scaleBoxSlider.setOpaque(false);
 		scaleBoxSlider.addChangeListener(new ChangeListener() {
 			@Override
@@ -171,7 +169,7 @@ public class Main extends JFrame implements ActionListener  {
 		scaleSphereSlider.setMajorTickSpacing(3);
 		scaleSphereSlider.setMinorTickSpacing(1);
 		scaleSphereSlider.setPaintTicks(true);
-//		scaleSphereSlider.setPaintTrack(false);
+		//		scaleSphereSlider.setPaintTrack(false);
 		scaleSphereSlider.setOpaque(false);
 		scaleSphereSlider.addChangeListener(new ChangeListener() {
 			@Override
@@ -195,27 +193,35 @@ public class Main extends JFrame implements ActionListener  {
 		helperPanel.add(rotBox, BorderLayout.WEST);
 		helperPanel.add(scaleBox, BorderLayout.EAST);
 		Box shapesBox = Box.createHorizontalBox();
+		JLabel ting = new JLabel("Antall:");
+		ting.setForeground(Color.white);
+		shapesBox.add(ting);
 		shapesBox.add(shapesSlider);
+		JLabel tang = new JLabel("Speed");
+		tang.setForeground(Color.white);
+		shapesBox.add(tang);
 		shapesBox.add(speedSlider);
+
 		helperPanel.add(shapesBox, BorderLayout.SOUTH);
 		panel.add(helperPanel);
-		
+
 		setJMenuBar(mb);
 		setLayout(new BorderLayout());
 		add(panel,BorderLayout.SOUTH);
 		add((Component) asdf,BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
-		
-		
-		
+
+
+
 	}
 	private void setColors(Color color){
 		panel.setBackground(color);
 		validate();
 	}
-	
+
 
 	public File getFile(){
 		return thisFile;
@@ -226,34 +232,34 @@ public class Main extends JFrame implements ActionListener  {
 		String command = e.getActionCommand();
 		if("Åpne".equals(command)){
 			fc = new JFileChooser();
-	
+
 			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			if(!(thisFile == null))
 				fc.setCurrentDirectory(thisFile);
 			int valg =  fc.showOpenDialog(chooserPanel);
 			if(valg == JFileChooser.APPROVE_OPTION){
 				thisFile = fc.getSelectedFile();
-				
+
 			}
 
-					asdf.setImages(thisFile);
-					
-				}
-			
-			
-		
+			asdf.setImages(thisFile);
+
+		}
+
+
+
 		else if("Kontrollpanel farge".equals(command)){
 			color = JColorChooser.showDialog(this, "Velg en farge", color);
 			if(color == null){
 				color = new Color(0,0,0);
 			}
 			setColors(color);
-			
+
 		}
 
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -262,5 +268,5 @@ public class Main extends JFrame implements ActionListener  {
 		}
 		new Main(new SlideShowPanel(), 1024, 768);
 	}
-	
+
 }
