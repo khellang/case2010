@@ -39,11 +39,6 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static void main(String[] args) {
-
-		new Main(new SlideShowPanel(), 1024, 768);
-	}
-
 	protected File images;
 	protected Alpha alpha;
 	protected TransformGroup scaleTransGroup;
@@ -76,7 +71,7 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 		gc = SimpleUniverse.getPreferredConfiguration();
 		cv = new Canvas3D(gc);
 		setLayout(new BorderLayout());
-		setPreferredSize(new Dimension(1024, 768));
+		setPreferredSize(new Dimension(1024, 600));
 		add(cv, BorderLayout.CENTER);
 		shapeGroups = new BranchGroup[2];
 		BranchGroup bg = createSceneGraph();
