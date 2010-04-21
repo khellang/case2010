@@ -1,4 +1,4 @@
-package interfaceCASE;
+package gui;
 
 
 
@@ -12,6 +12,5 @@ public interface CASE_VÅR_2010_Interface {
 	public void setScaleBox(float max, float min);
 	public void setScaleSphere(float max, float min);
 	public void setImages(File  images);
-	
-
+	public void setShapes(int numberOfShapes);
 }

@@ -1,4 +1,5 @@
-package interfaceCASE;
+package gui;
+
 
 
 import java.awt.BorderLayout;
@@ -8,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
 import javax.swing.Box;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
@@ -22,7 +24,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-public class GUI_Case extends JFrame implements ActionListener  {
+public class Main extends JFrame implements ActionListener  {
 	/**
 	 * 
 	 */
@@ -39,6 +41,7 @@ public class GUI_Case extends JFrame implements ActionListener  {
 	JSlider sphereRotSlider;
 	JSlider scaleBoxSlider;
 	JSlider scaleSphereSlider;
+	JSlider shapesSlider;
 	int alpha;
 	float scaleMax;
 	float scaleMin;
@@ -52,7 +55,7 @@ public class GUI_Case extends JFrame implements ActionListener  {
 	
 	
 	
-	public GUI_Case(JPanel casePanel,int arg1,int arg2 ){
+	public Main(JPanel casePanel,int arg1,int arg2 ){
 		super("CASE 2010");
 		asdf = (CASE_VÅR_2010_Interface)casePanel;
 		setSize(new Dimension(arg1, arg2));
@@ -77,12 +80,31 @@ public class GUI_Case extends JFrame implements ActionListener  {
 		skaleringLabel.setForeground(Color.white);		
 		roteringLabel = new JLabel("          Rotasjon");
 		roteringLabel.setForeground(Color.white);
+		shapesSlider = new JSlider(1,10,1);
+		shapesSlider.setValue(2);
+		shapesSlider.setMajorTickSpacing(1);
+		shapesSlider.setInverted(false);
+		shapesSlider.setPaintTicks(true);
+//		shapesSlider.setPaintTrack(false);
+		shapesSlider.setSnapToTicks(true);
+		shapesSlider.setOpaque(false);
+		shapesSlider.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				
+				asdf.setShapes(shapesSlider.getValue());
+				scaleBoxSlider.setMaximum(11-shapesSlider.getValue());
+				scaleSphereSlider.setMaximum(11-shapesSlider.getValue());
+				
+			}
+		});
 		boxRotSlider = new JSlider(1,16 , 5);
 		boxRotSlider.setMajorTickSpacing(5);
 		boxRotSlider.setMinorTickSpacing(1);
 		boxRotSlider.setInverted(true);
 		boxRotSlider.setPaintTicks(true);
-		boxRotSlider.setPaintTrack(false);
+//		boxRotSlider.setPaintTrack(false);
 		boxRotSlider.setSnapToTicks(true);
 		boxRotSlider.setOpaque(false);
 		boxRotSlider.addChangeListener(new ChangeListener() {
@@ -99,7 +121,7 @@ public class GUI_Case extends JFrame implements ActionListener  {
 		sphereRotSlider.setMajorTickSpacing(5);
 		sphereRotSlider.setMinorTickSpacing(1);
 		sphereRotSlider.setPaintTicks(true);
-		sphereRotSlider.setPaintTrack(false);
+//		sphereRotSlider.setPaintTrack(false);
 		sphereRotSlider.setInverted(true);
 		sphereRotSlider.setSnapToTicks(true);
 		sphereRotSlider.setOpaque(false);
@@ -113,11 +135,11 @@ public class GUI_Case extends JFrame implements ActionListener  {
 				
 			}
 		});
-		scaleBoxSlider = new JSlider(1,16,5);
-		scaleBoxSlider.setMajorTickSpacing(5);
+		scaleBoxSlider = new JSlider(1,9,3);
+		scaleBoxSlider.setMajorTickSpacing(3);
 		scaleBoxSlider.setMinorTickSpacing(1);
 		scaleBoxSlider.setPaintTicks(true);
-		scaleBoxSlider.setPaintTrack(false);
+//		scaleBoxSlider.setPaintTrack(false);
 		scaleBoxSlider.setOpaque(false);
 		scaleBoxSlider.addChangeListener(new ChangeListener() {
 			@Override
@@ -127,11 +149,11 @@ public class GUI_Case extends JFrame implements ActionListener  {
 				asdf.setScaleBox(scaleMax, scaleMin);
 			}
 		});
-		scaleSphereSlider = new JSlider(1,16,5);
-		scaleSphereSlider.setMajorTickSpacing(5);
+		scaleSphereSlider = new JSlider(1,9,3);
+		scaleSphereSlider.setMajorTickSpacing(3);
 		scaleSphereSlider.setMinorTickSpacing(1);
 		scaleSphereSlider.setPaintTicks(true);
-		scaleSphereSlider.setPaintTrack(false);
+//		scaleSphereSlider.setPaintTrack(false);
 		scaleSphereSlider.setOpaque(false);
 		scaleSphereSlider.addChangeListener(new ChangeListener() {
 			@Override
@@ -142,6 +164,8 @@ public class GUI_Case extends JFrame implements ActionListener  {
 			}
 		});
 		thisFile = null;
+		JPanel helperPanel = new JPanel(new BorderLayout());
+		helperPanel.setOpaque(false);
 		Box rotBox = Box.createVerticalBox();
 		rotBox.add(roteringLabel);
 		rotBox.add(sphereRotSlider);
@@ -150,8 +174,15 @@ public class GUI_Case extends JFrame implements ActionListener  {
 		scaleBox.add(skaleringLabel);
 		scaleBox.add(scaleSphereSlider);
 		scaleBox.add(scaleBoxSlider);
-		panel.add(rotBox);
-		panel.add(scaleBox);
+		helperPanel.add(rotBox, BorderLayout.WEST);
+		helperPanel.add(scaleBox, BorderLayout.EAST);
+		Box shapesBox = Box.createHorizontalBox();
+		shapesBox.add(shapesSlider);
+		helperPanel.add(shapesBox, BorderLayout.SOUTH);
+//		panel.add(rotBox);
+//		panel.add(scaleBox);
+//		panel.add(shapesBox);
+		panel.add(helperPanel);
 		
 		setJMenuBar(mb);
 		setLayout(new BorderLayout());
