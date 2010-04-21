@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import javax.media.j3d.ImageComponent2D;
 import javax.media.j3d.Texture;
 import javax.media.j3d.Texture2D;
+import javax.swing.JOptionPane;
 
 import com.sun.j3d.utils.image.TextureLoader;
 
@@ -88,7 +89,7 @@ public class TextureList {
 				this.lastTexture = -1;
 			}
 			else
-				System.out.println("Ingen bildefiler i valgt mappe");
+				JOptionPane.showMessageDialog(null, "Ingen bilder i valgt mappe!", "Ingen bilder", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
