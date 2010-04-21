@@ -43,6 +43,7 @@ public class Main extends JFrame implements ActionListener  {
 	JSlider scaleBoxSlider;
 	JSlider scaleSphereSlider;
 	JSlider shapesSlider;
+	JSlider speedSlider;
 	int alpha;
 	float scaleMax;
 	float scaleMin;
@@ -52,13 +53,13 @@ public class Main extends JFrame implements ActionListener  {
 
 	
 	
-	CASE_VÅR_2010_Interface asdf;
+	SlideShowImpl asdf;
 	
 	
 	
 	public Main(JPanel casePanel,int arg1,int arg2 ){
 		super("CASE 2010");
-		asdf = (CASE_VÅR_2010_Interface)casePanel;
+		asdf = (SlideShowImpl)casePanel;
 		setSize(new Dimension(arg1, arg2));
 		color = new Color(0,0,0);
 		//Setter opp menyen
@@ -97,6 +98,22 @@ public class Main extends JFrame implements ActionListener  {
 				asdf.setShapes(shapesSlider.getValue());
 				scaleBoxSlider.setMaximum(11-shapesSlider.getValue());
 				scaleSphereSlider.setMaximum(11-shapesSlider.getValue());
+				
+			}
+		});
+		speedSlider = new JSlider(2,20,7);
+		speedSlider.setMajorTickSpacing(1);
+		speedSlider.setInverted(true);
+		speedSlider.setPaintTicks(true);
+//		speedSlider.setPaintTrack(false);
+		speedSlider.setSnapToTicks(true);
+		speedSlider.setOpaque(false);
+		speedSlider.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				
+				asdf.setSpeed(speedSlider.getValue()*1000);
 				
 			}
 		});
@@ -179,10 +196,8 @@ public class Main extends JFrame implements ActionListener  {
 		helperPanel.add(scaleBox, BorderLayout.EAST);
 		Box shapesBox = Box.createHorizontalBox();
 		shapesBox.add(shapesSlider);
+		shapesBox.add(speedSlider);
 		helperPanel.add(shapesBox, BorderLayout.SOUTH);
-//		panel.add(rotBox);
-//		panel.add(scaleBox);
-//		panel.add(shapesBox);
 		panel.add(helperPanel);
 		
 		setJMenuBar(mb);

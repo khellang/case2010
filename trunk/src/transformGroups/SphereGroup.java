@@ -47,6 +47,10 @@ public class SphereGroup extends BranchGroup {
 	Transform3D shadowProj;
 	ScaleInterpolator scaler;
 	Alpha rotateAlpha;
+	Alpha sphereTextureAlpha;
+	Alpha scaleAlpha;
+	Alpha positionAlpha;
+	Alpha randomRotateAlpha;
 	
 	Appearance shadowAp;
 	
@@ -109,7 +113,7 @@ public class SphereGroup extends BranchGroup {
 		shadowGroup.addChild(shape);
 		
 		//texturizer
-		Alpha sphereTextureAlpha = new Alpha();
+		sphereTextureAlpha = new Alpha();
 		TextureInterpolator sphereTexturizer = new TextureInterpolator(sphereTextureAlpha, sphereAp, textures);
 		sphereTextureAlpha.setMode(Alpha.INCREASING_ENABLE);
 		sphereTextureAlpha.setIncreasingAlphaDuration(slideTime);
@@ -118,7 +122,7 @@ public class SphereGroup extends BranchGroup {
 		rotateGroup.addChild(sphereTexturizer);
 
 		//positioner
-		Alpha positionAlpha = new Alpha();
+		positionAlpha = new Alpha();
 		positionAlpha.setMode(Alpha.DECREASING_ENABLE | Alpha.INCREASING_ENABLE);
 		positionAlpha.setIncreasingAlphaDuration(slideTime);
 		positionAlpha.setDecreasingAlphaDuration(slideTime);
@@ -131,7 +135,7 @@ public class SphereGroup extends BranchGroup {
 		positionGroup.addChild(positioner);
 		
 		//randomRotator
-		Alpha randomRotateAlpha = new Alpha();
+		randomRotateAlpha = new Alpha();
 		randomRotateAlpha.setMode(Alpha.DECREASING_ENABLE | Alpha.INCREASING_ENABLE);
 		randomRotateAlpha.setDecreasingAlphaDuration(slideTime);
 		randomRotateAlpha.setIncreasingAlphaDuration(slideTime);
@@ -141,7 +145,7 @@ public class SphereGroup extends BranchGroup {
 		randomRotGroup.addChild(randomRotator);
 
 		//scaler
-		Alpha scaleAlpha = new Alpha();
+		scaleAlpha = new Alpha();
 		scaleAlpha.setMode(Alpha.DECREASING_ENABLE | Alpha.INCREASING_ENABLE);
 		scaleAlpha.setIncreasingAlphaDuration(slideTime/2);
 		scaleAlpha.setDecreasingAlphaDuration(slideTime/2);
@@ -216,6 +220,18 @@ public class SphereGroup extends BranchGroup {
 		ita.getCoordinateIndices(0, indices);
 		shadow.setCoordinateIndices(0, indices);
 		return shadow;
+	}
+	
+	public void setSpeed(int speed) {
+		sphereTextureAlpha.setIncreasingAlphaDuration(speed);
+		positionAlpha.setIncreasingAlphaDuration(speed);
+		positionAlpha.setDecreasingAlphaDuration(speed);
+		randomRotateAlpha.setDecreasingAlphaDuration(speed);
+		randomRotateAlpha.setIncreasingAlphaDuration(speed);
+		scaleAlpha.setIncreasingAlphaDuration(speed/2);
+		scaleAlpha.setDecreasingAlphaDuration(speed/2);
+		scaleAlpha.setIncreasingAlphaRampDuration(speed/10);
+		scaleAlpha.setDecreasingAlphaRampDuration(speed/10);
 	}
 	
 	public void showShadow(boolean show) {
