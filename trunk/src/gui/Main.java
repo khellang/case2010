@@ -101,7 +101,7 @@ public class Main extends JFrame implements ActionListener  {
 				
 			}
 		});
-		speedSlider = new JSlider(2,20,7);
+		speedSlider = new JSlider(1,10,7);
 		speedSlider.setMajorTickSpacing(1);
 		speedSlider.setInverted(true);
 		speedSlider.setPaintTicks(true);
