@@ -33,7 +33,7 @@ import com.sun.j3d.utils.picking.PickTool;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 public class SlideShowPanel extends JPanel implements MouseListener,
-		CASE_VÅR_2010_Interface {
+		SlideShowImpl {
 
 	/**
 	 * 
@@ -113,14 +113,6 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 		Shape3D wall = new Shape3D(new Wall(new Color3f(1f, 1f, 1f)), wallAp);
 		wall.setPickable(false);
 		wallGroup.addChild(wall);
-
-//		boxGroup = new BoxGroup(slideTime, bounds, textures, lightPos, wallPos,
-//				0);
-//		root.addChild(boxGroup);
-//
-//		sphereGroup = new SphereGroup(slideTime, bounds, textures, lightPos,
-//				wallPos, slideTime / 2);
-//		root.addChild(sphereGroup);
 		
 		for (int i = 0; i < shapeGroups.length; i++) {
 			if (i%2 == 0) {
@@ -251,6 +243,18 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 		}
 		for (int i = 0; i < shapeGroups.length; i++) {
 			root.addChild(shapeGroups[i]);
+		}
+	}
+
+	public void setSpeed(int speed) {
+		for (int i = 0; i < shapeGroups.length; i++) {
+			if (shapeGroups[i] instanceof BoxGroup) {
+				BoxGroup bg = (BoxGroup)shapeGroups[i];
+				bg.setSpeed(speed);
+			} else {
+				SphereGroup sg = (SphereGroup)shapeGroups[i];
+				sg.setSpeed(speed);
+			}
 		}
 	}
 
