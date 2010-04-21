@@ -17,6 +17,7 @@ import javax.media.j3d.Canvas3D;
 import javax.media.j3d.Node;
 import javax.media.j3d.Shape3D;
 import javax.media.j3d.TransformGroup;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.vecmath.Color3f;
 import javax.vecmath.Point3f;
@@ -66,7 +67,15 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 	private float maxScaleSphere;
 
 	public SlideShowPanel() {
-		images = new File("C:/Users/Kristian/Pictures/galleri");
+		images = new File(System.getProperty("user.home") + "/Pictures/");
+		JFileChooser fchooser = new JFileChooser();
+		fchooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		fchooser.setApproveButtonText("Bruk mappe");
+		fchooser.setDialogTitle("Velg bildemappe");
+		if (!images.exists()) {
+			fchooser.showOpenDialog(this);
+			images = fchooser.getSelectedFile();
+		}
 		textures = new TextureList(images);
 		gc = SimpleUniverse.getPreferredConfiguration();
 		cv = new Canvas3D(gc);
