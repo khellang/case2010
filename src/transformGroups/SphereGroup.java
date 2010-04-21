@@ -5,6 +5,7 @@ import javax.media.j3d.Alpha;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.Behavior;
 import javax.media.j3d.BoundingSphere;
+import javax.media.j3d.BranchGroup;
 import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.Geometry;
 import javax.media.j3d.GeometryArray;
@@ -33,7 +34,7 @@ import behaviors.TextureInterpolator;
 import com.sun.j3d.utils.geometry.GeometryInfo;
 import com.sun.j3d.utils.geometry.Sphere;
 
-public class SphereGroup extends TransformGroup {
+public class SphereGroup extends BranchGroup {
 
 	TransformGroup randomRotGroup;
 	TransformGroup positionGroup;
@@ -52,6 +53,8 @@ public class SphereGroup extends TransformGroup {
 	public SphereGroup(int slideTime, BoundingSphere bounds, TextureList textures, Point3f lightPos, Point3f wallPos, int delay) {
 		
 		updater = new ShadowUpdater();
+		
+		this.setCapability(BranchGroup.ALLOW_DETACH);
 		
 		shadowGroup = new TransformGroup();
 		addChild(shadowGroup);
@@ -102,7 +105,7 @@ public class SphereGroup extends TransformGroup {
 		polyAttr.setCullFace(PolygonAttributes.CULL_NONE);
 		shadowAp.setPolygonAttributes(polyAttr);
 		Shape3D shape = new Shape3D(shadowGeom, shadowAp);
-
+		shape.setPickable(false);
 		shadowGroup.addChild(shape);
 		
 		//texturizer
@@ -123,7 +126,7 @@ public class SphereGroup extends TransformGroup {
 		Transform3D positionTransform = new Transform3D();
 		Random rnd = new Random();
 		positionTransform.rotZ(rnd.nextDouble()*(2*Math.PI));
-		PositionInterpolator positioner = new PositionInterpolator(positionAlpha, positionGroup, positionTransform, 1.4f, -1.4f);
+		PositionInterpolator positioner = new PositionInterpolator(positionAlpha, positionGroup, positionTransform, 2f, -2f);
 		positioner.setSchedulingBounds(bounds);
 		positionGroup.addChild(positioner);
 		
