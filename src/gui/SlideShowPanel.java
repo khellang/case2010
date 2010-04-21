@@ -67,7 +67,7 @@ public class SlideShowPanel extends JPanel implements MouseListener,
 	private float maxScaleSphere;
 
 	public SlideShowPanel() {
-		images = new File(System.getProperty("user.home") + "/Pictures/");
+		images = new File(System.getProperty("user.home") + "/Pictures/Sample Pictures/");
 		JFileChooser fchooser = new JFileChooser();
 		fchooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fchooser.setApproveButtonText("Bruk mappe");
